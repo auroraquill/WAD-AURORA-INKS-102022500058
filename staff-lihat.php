@@ -1,7 +1,9 @@
 <?php
-require __DIR__ . '/data.php';
+require __DIR__ . '/koneksi.php';
 
-$p = ambilSatu((int)($_GET['id'] ?? 0));
+$stmt = koneksi()->prepare('SELECT id, nama, jabatan, kontak FROM pegawai WHERE id = ?');
+$stmt->execute([(int)($_GET['id'] ?? 0)]);
+$p = $stmt->fetch(PDO::FETCH_ASSOC);
 if (!$p) {
     header('Location: staff-list.php');
     exit;

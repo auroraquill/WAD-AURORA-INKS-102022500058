@@ -1,6 +1,7 @@
 <?php
-require __DIR__ . '/data.php';
-$pegawai = ambilPegawai();
+require __DIR__ . '/koneksi.php';
+$pegawai = koneksi()->query('SELECT id, nama, jabatan, kontak FROM pegawai ORDER BY id')->fetchAll(PDO::FETCH_ASSOC);
+?>
 ?>
 <!DOCTYPE html>
 <html lang="id">

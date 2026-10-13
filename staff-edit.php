@@ -1,11 +1,13 @@
 <?php
-require __DIR__ . '/data.php';
+require __DIR__ . '/koneksi.php';
 
 $jabatanValid = ['Chef', 'Waiter', 'Kasir'];
 $error = '';
 $id = (int)($_GET['id'] ?? $_POST['id'] ?? 0);
 
-$p = ambilSatu($id);
+$stmt = koneksi()->prepare('SELECT id, nama, jabatan, kontak FROM pegawai WHERE id = ?');
+$stmt->execute([$id]);
+$p = $stmt->fetch(PDO::FETCH_ASSOC);
 if (!$p) {
     header('Location: staff-list.php');
     exit;
@@ -21,7 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (!in_array($jabatan, $jabatanValid, true)) {
         $error = 'Jabatan tidak valid.';
     } else {
-        ubahPegawai($id, $nama, $jabatan, $kontak);
+        $stmt = koneksi()->prepare('UPDATE pegawai SET nama = ?, jabatan = ?, kontak = ? WHERE id = ?');
+        $stmt->execute([$nama, $jabatan, $kontak, $id]);
         header('Location: staff-list.php');
         exit;
     }

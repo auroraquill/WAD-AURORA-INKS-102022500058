@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/data.php';
+require __DIR__ . '/koneksi.php';
 
 $jabatanValid = ['Chef', 'Waiter', 'Kasir'];
 $error = '';
@@ -14,7 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (!in_array($jabatan, $jabatanValid, true)) {
         $error = 'Jabatan tidak valid.';
     } else {
-        tambahPegawai($nama, $jabatan, $kontak);
+        $stmt = koneksi()->prepare('INSERT INTO pegawai (nama, jabatan, kontak) VALUES (?, ?, ?)');
+        $stmt->execute([$nama, $jabatan, $kontak]);
         header('Location: staff-list.php');
         exit;
     }
@@ -24,8 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulir Tambah Pegawai</title>
+     <title>Formulir Tambah Pegawai</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>

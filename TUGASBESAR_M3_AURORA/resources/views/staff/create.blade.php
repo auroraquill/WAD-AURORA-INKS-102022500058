@@ -17,7 +17,7 @@
     <p>Isi data pegawai baru pada formulir di bawah ini.</p>
 
     @if ($errors->any())
-      <div style="color:#c0392b;">
+      <div class="alert-error">
         @foreach ($errors->all() as $err)
           <p>{{ $err }}</p>
         @endforeach
@@ -26,18 +26,18 @@
 
     <form action="{{ route('staff.store') }}" method="post" class="form-box">
       @csrf
-      <label for="nama">Nama Pegawai:</label><br>
-      <input type="text" id="nama" name="nama" value="{{ old('nama') }}" required><br><br>
+      <label for="nama">Nama Pegawai:</label>
+      <input type="text" id="nama" name="nama" value="{{ old('nama') }}" required>
 
-      <label for="jabatan">Jabatan:</label><br>
+      <label for="jabatan">Jabatan:</label>
       <select id="jabatan" name="jabatan">
         @foreach (['Chef', 'Waiter', 'Kasir'] as $j)
           <option value="{{ $j }}" @selected(old('jabatan') === $j)>{{ $j }}</option>
         @endforeach
-      </select><br><br>
+      </select>
 
-      <label for="kontak">Nomor Kontak:</label><br>
-      <input type="text" id="kontak" name="kontak" value="{{ old('kontak') }}" required><br><br>
+      <label for="kontak">Nomor Kontak:</label>
+      <input type="text" id="kontak" name="kontak" value="{{ old('kontak') }}" required>
 
       <input type="submit" value="Simpan">
     </form>

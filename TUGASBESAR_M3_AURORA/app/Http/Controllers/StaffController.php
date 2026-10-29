@@ -15,7 +15,7 @@ class StaffController
 
     public function create()
     {
-        return view('staff');
+        return view('staff.create');
     }
 
     public function store(Request $request)
